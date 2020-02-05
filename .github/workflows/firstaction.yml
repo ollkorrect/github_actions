@@ -17,8 +17,19 @@ jobs:
       name: Gran L
     steps:
     - name: Run a one-line script
-      run: echo Hello $name!
+      run: |
+        echo Hello $name!
+        echo actor: ${{github.actor}}
+        echo Comitted By:: ${{ github.event.commits[0].author.name}}
+      
         
+  dump:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GITHUB_CONTEXT: ${{toJson(github)}}
+        run: echo "$GITHUB_CONTEXT"
+  
   pull_request_only:
 
     runs-on: ubuntu-latest
